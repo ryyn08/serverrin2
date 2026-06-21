@@ -1,7 +1,7 @@
 const { Octokit } = require("@octokit/rest");
 const { execSync } = require("child_process");
 
-const octokit = new Octokit({ auth: "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" });
+const octokit = new Octokit({ auth: "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" });
 const GH = { owner: "ryyn08", repo: "serverrin2", path: "server.json" };
 
 async function run() {
