@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <style>
+        body { background: #0a0e17; color: #fff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 500px; }
+        .card { background: rgba(0,0,0,0.2); padding: 10px; margin: 10px 0; border-radius: 10px; }
+        .online { color: #00ff88; } .offline { color: #ff4444; }
+    </style>
+</head>
+<body>
+    <div class="glass" id="app">
+        <h1>Server Status</h1>
+        <div id="list">Loading...</div>
+    </div>
+    <script>
+        async function update() {
+            const res = await fetch('https://raw.githubusercontent.com/ryyn08/serverrin2/main/server.json?nocache=' + Date.now());
+            const data = await res.json();
+            document.getElementById('list').innerHTML = data.map(s => `
+                <div class="card">
+                    <b>${s.name}</b><br>
+                    IP: ${s.ip} | Latency: ${s.ms}ms<br>
+                    Status: <span class="${s.status}">${s.status.toUpperCase()}</span>
+                </div>
+            `).join('');
+        }
+        setInterval(update, 3000); update();
+    </script>
+</body>
+</html>
