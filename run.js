@@ -1,5 +1,6 @@
 const { Octokit } = require("@octokit/rest");
 const { execSync } = require("child_process");
+// Pastikan tidak ada typo di baris ini
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const GH = { owner: "ryyn08", repo: "serverrin2", path: "server.json" };
 
