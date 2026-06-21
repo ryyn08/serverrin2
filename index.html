@@ -1,31 +1,32 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
     <style>
-        body { background: #0a0e17; color: #fff; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 20px; width: 100%; max-width: 500px; }
-        .card { background: rgba(0,0,0,0.2); padding: 10px; margin: 10px 0; border-radius: 10px; }
-        .online { color: #00ff88; } .offline { color: #ff4444; }
+        body { background: #0a0e17; color: white; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 20px; width: 350px; }
+        .card { background: rgba(0,0,0,0.3); padding: 15px; margin: 10px 0; border-radius: 12px; border-left: 5px solid #444; }
+        .online { border-color: #00ff88; color: #00ff88; }
+        .offline { border-color: #ff4444; color: #ff4444; }
     </style>
 </head>
 <body>
-    <div class="glass" id="app">
-        <h1>Server Status</h1>
-        <div id="list">Loading...</div>
+    <div class="glass">
+        <h2>Server Status</h2>
+        <div id="list">Memuat...</div>
     </div>
     <script>
-        async function update() {
-            const res = await fetch('https://raw.githubusercontent.com/ryyn08/serverrin2/main/server.json?nocache=' + Date.now());
+        async function fetchStatus() {
+            const res = await fetch('https://raw.githubusercontent.com/ryyn08/serverrin2/main/server.json?t=' + Date.now());
             const data = await res.json();
             document.getElementById('list').innerHTML = data.map(s => `
-                <div class="card">
+                <div class="card ${s.status}">
                     <b>${s.name}</b><br>
-                    IP: ${s.ip} | Latency: ${s.ms}ms<br>
-                    Status: <span class="${s.status}">${s.status.toUpperCase()}</span>
+                    IP: ${s.ip} | MS: ${s.ms}ms<br>
+                    Status: ${s.status.toUpperCase()}
                 </div>
             `).join('');
         }
-        setInterval(update, 3000); update();
+        setInterval(fetchStatus, 3000); fetchStatus();
     </script>
 </body>
 </html>
